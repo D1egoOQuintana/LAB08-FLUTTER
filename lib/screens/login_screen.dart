@@ -13,13 +13,14 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStateMixin {
+class _LoginScreenState extends State<LoginScreen>
+    with SingleTickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _obscurePassword = true;
   bool _rememberMe = false;
-  
+
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
 
@@ -47,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
   Future<void> _handleLogin() async {
     if (_formKey.currentState!.validate()) {
       final authProvider = Provider.of<AuthProvider>(context, listen: false);
-      
+
       final success = await authProvider.login(
         _emailController.text,
         _passwordController.text,
@@ -75,7 +76,9 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Recuperar Contraseña'),
-        content: const Text('Se enviará un enlace de recuperación a tu correo electrónico.'),
+        content: const Text(
+          'Se enviará un enlace de recuperación a tu correo electrónico.',
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
@@ -108,9 +111,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
       child: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: const BoxDecoration(
-          gradient: AppConstants.primaryGradient,
-        ),
+        decoration: const BoxDecoration(gradient: AppConstants.primaryGradient),
         child: SafeArea(
           child: FadeTransition(
             opacity: _fadeAnimation,
@@ -193,7 +194,10 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                             placeholder: 'correo@ejemplo.com',
                             prefix: Padding(
                               padding: const EdgeInsets.only(left: 8.0),
-                              child: Icon(CupertinoIcons.mail, color: CupertinoColors.systemGrey),
+                              child: Icon(
+                                CupertinoIcons.mail,
+                                color: CupertinoColors.systemGrey,
+                              ),
                             ),
                           ),
 
@@ -206,8 +210,14 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                             placeholder: 'Contraseña',
                             suffix: CupertinoButton(
                               padding: EdgeInsets.zero,
-                              child: Icon(_obscurePassword ? CupertinoIcons.eye_slash : CupertinoIcons.eye),
-                              onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                              child: Icon(
+                                _obscurePassword
+                                    ? CupertinoIcons.eye_slash
+                                    : CupertinoIcons.eye,
+                              ),
+                              onPressed: () => setState(
+                                () => _obscurePassword = !_obscurePassword,
+                              ),
                             ),
                           ),
 
@@ -218,7 +228,8 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                             children: [
                               CupertinoSwitch(
                                 value: _rememberMe,
-                                onChanged: (v) => setState(() => _rememberMe = v),
+                                onChanged: (v) =>
+                                    setState(() => _rememberMe = v),
                               ),
                               const SizedBox(width: 8),
                               const Text('Recordar sesión'),
@@ -232,11 +243,18 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                             width: double.infinity,
                             height: size.height * 0.07,
                             child: authProvider.isLoading
-                                ? const Center(child: CupertinoActivityIndicator())
+                                ? const Center(
+                                    child: CupertinoActivityIndicator(),
+                                  )
                                 : CupertinoButton.filled(
                                     onPressed: _handleLogin,
                                     borderRadius: BorderRadius.circular(12),
-                                    child: Text('INICIAR SESIÓN', style: GoogleFonts.poppins(fontWeight: FontWeight.bold)),
+                                    child: Text(
+                                      'INICIAR SESIÓN',
+                                      style: GoogleFonts.poppins(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   ),
                           ),
 
@@ -246,7 +264,12 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                           CupertinoButton(
                             onPressed: _showForgotPasswordDialog,
                             padding: EdgeInsets.zero,
-                            child: Text('¿Olvidaste tu contraseña?', style: GoogleFonts.poppins(color: AppConstants.primaryColor)),
+                            child: Text(
+                              '¿Olvidaste tu contraseña?',
+                              style: GoogleFonts.poppins(
+                                color: AppConstants.primaryColor,
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -263,10 +286,28 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                       ),
                       child: Column(
                         children: [
-                          Text('Credenciales de prueba:', style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.bold)),
+                          Text(
+                            'Credenciales de prueba:',
+                            style: GoogleFonts.poppins(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                           SizedBox(height: size.height * 0.01),
-                          Text('Email: usuario@tienda.com', style: GoogleFonts.poppins(color: Colors.white, fontSize: size.width * 0.03)),
-                          Text('Password: 123456', style: GoogleFonts.poppins(color: Colors.white, fontSize: size.width * 0.03)),
+                          Text(
+                            'Email: usuario@tienda.com',
+                            style: GoogleFonts.poppins(
+                              color: Colors.white,
+                              fontSize: size.width * 0.03,
+                            ),
+                          ),
+                          Text(
+                            'Password: 123456',
+                            style: GoogleFonts.poppins(
+                              color: Colors.white,
+                              fontSize: size.width * 0.03,
+                            ),
+                          ),
                         ],
                       ),
                     ),

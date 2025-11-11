@@ -31,7 +31,9 @@ class MyApp extends StatelessWidget {
             title: 'Mi Tienda',
             debugShowCheckedModeBanner: false,
             theme: CupertinoThemeData(
-              brightness: themeProvider.isDarkMode ? Brightness.dark : Brightness.light,
+              brightness: themeProvider.isDarkMode
+                  ? Brightness.dark
+                  : Brightness.light,
               primaryColor: AppConstants.primaryColor,
               textTheme: CupertinoTextThemeData(
                 textStyle: GoogleFonts.poppins(),
@@ -62,16 +64,16 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> _initializeApp() async {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
     final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
-    
+
     // Cargar preferencias
     await Future.wait([
       authProvider.initAuth(),
       themeProvider.loadPreferences(),
     ]);
-    
+
     // Esperar 2 segundos para mostrar splash
     await Future.delayed(const Duration(seconds: 2));
-    
+
     if (mounted) {
       // Navegar según el estado de autenticación usando CupertinoPageRoute
       Navigator.of(context).pushReplacement(
@@ -88,16 +90,15 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     // Make layout responsive using MediaQuery
     final size = MediaQuery.of(context).size;
-    final logoSize = (size.width < size.height ? size.width : size.height) * 0.22;
+    final logoSize =
+        (size.width < size.height ? size.width : size.height) * 0.22;
 
     return CupertinoPageScaffold(
       // Use a Container as background to keep the gradient
       child: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: const BoxDecoration(
-          gradient: AppConstants.primaryGradient,
-        ),
+        decoration: const BoxDecoration(gradient: AppConstants.primaryGradient),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

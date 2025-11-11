@@ -66,7 +66,11 @@ class _MenuScreenState extends State<MenuScreen> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(CupertinoIcons.cube_box, size: size.width * 0.16, color: CupertinoColors.systemGrey),
+              Icon(
+                CupertinoIcons.cube_box,
+                size: size.width * 0.16,
+                color: CupertinoColors.systemGrey,
+              ),
               SizedBox(height: size.height * 0.02),
               Text(
                 'No tienes pedidos',
@@ -99,7 +103,10 @@ class _MenuScreenState extends State<MenuScreen> {
 
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-        middle: Text('Mi Tienda', style: GoogleFonts.poppins(fontWeight: FontWeight.bold)),
+        middle: Text(
+          'Mi Tienda',
+          style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
+        ),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -115,7 +122,10 @@ class _MenuScreenState extends State<MenuScreen> {
                   builder: (ctx) => CupertinoAlertDialog(
                     content: const Text('Tienes 3 notificaciones nuevas'),
                     actions: [
-                      CupertinoDialogAction(child: const Text('OK'), onPressed: () => Navigator.pop(ctx)),
+                      CupertinoDialogAction(
+                        child: const Text('OK'),
+                        onPressed: () => Navigator.pop(ctx),
+                      ),
                     ],
                   ),
                 );
@@ -137,7 +147,9 @@ class _MenuScreenState extends State<MenuScreen> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  CupertinoPageRoute(builder: (context) => const ProfileScreen()),
+                  CupertinoPageRoute(
+                    builder: (context) => const ProfileScreen(),
+                  ),
                 );
               },
             ),
@@ -149,7 +161,8 @@ class _MenuScreenState extends State<MenuScreen> {
           onPressed: () {
             showCupertinoModalPopup(
               context: context,
-              builder: (context) => _buildDrawerContent(initial, userEmail, size),
+              builder: (context) =>
+                  _buildDrawerContent(initial, userEmail, size),
             );
           },
         ),
@@ -186,7 +199,8 @@ class _MenuScreenState extends State<MenuScreen> {
                             Navigator.push(
                               context,
                               CupertinoPageRoute(
-                                builder: (context) => ProductsScreen(category: category.name),
+                                builder: (context) =>
+                                    ProductsScreen(category: category.name),
                               ),
                             );
                           },
@@ -241,7 +255,10 @@ class _MenuScreenState extends State<MenuScreen> {
                 right: size.width * 0.04,
                 bottom: size.width * 0.04,
                 child: CupertinoButton.filled(
-                  padding: EdgeInsets.symmetric(horizontal: size.width * 0.04, vertical: 12),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: size.width * 0.04,
+                    vertical: 12,
+                  ),
                   borderRadius: BorderRadius.circular(30),
                   child: Row(
                     children: [
@@ -328,7 +345,9 @@ class _MenuScreenState extends State<MenuScreen> {
                     Navigator.pop(context);
                     Navigator.push(
                       context,
-                      CupertinoPageRoute(builder: (context) => const ProfileScreen()),
+                      CupertinoPageRoute(
+                        builder: (context) => const ProfileScreen(),
+                      ),
                     );
                   },
                 ),
@@ -340,7 +359,8 @@ class _MenuScreenState extends State<MenuScreen> {
                     Navigator.push(
                       context,
                       CupertinoPageRoute(
-                        builder: (context) => const ProfileScreen(initialTab: 1),
+                        builder: (context) =>
+                            const ProfileScreen(initialTab: 1),
                       ),
                     );
                   },
@@ -355,8 +375,14 @@ class _MenuScreenState extends State<MenuScreen> {
                 ),
                 const Divider(),
                 CupertinoListTile(
-                  leading: const Icon(CupertinoIcons.arrow_right_square, color: CupertinoColors.destructiveRed),
-                  title: const Text('Cerrar Sesión', style: TextStyle(color: CupertinoColors.destructiveRed)),
+                  leading: const Icon(
+                    CupertinoIcons.arrow_right_square,
+                    color: CupertinoColors.destructiveRed,
+                  ),
+                  title: const Text(
+                    'Cerrar Sesión',
+                    style: TextStyle(color: CupertinoColors.destructiveRed),
+                  ),
                   onTap: () {
                     Navigator.pop(context);
                     _showLogoutDialog();
@@ -415,9 +441,14 @@ class _MenuScreenState extends State<MenuScreen> {
                     showCupertinoDialog(
                       context: context,
                       builder: (ctx) => CupertinoAlertDialog(
-                        content: const Text('Funcionalidad de pago en desarrollo'),
+                        content: const Text(
+                          'Funcionalidad de pago en desarrollo',
+                        ),
                         actions: [
-                          CupertinoDialogAction(child: const Text('OK'), onPressed: () => Navigator.pop(ctx)),
+                          CupertinoDialogAction(
+                            child: const Text('OK'),
+                            onPressed: () => Navigator.pop(ctx),
+                          ),
                         ],
                       ),
                     );

@@ -42,8 +42,10 @@ class _ProductsScreenState extends State<ProductsScreen> {
         filteredProducts = products;
       } else {
         filteredProducts = products
-            .where((product) =>
-                product.name.toLowerCase().contains(query.toLowerCase()))
+            .where(
+              (product) =>
+                  product.name.toLowerCase().contains(query.toLowerCase()),
+            )
             .toList();
       }
     });
@@ -58,7 +60,10 @@ class _ProductsScreenState extends State<ProductsScreen> {
     final cartProvider = Provider.of<CartProvider>(context);
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-        middle: Text('Productos', style: GoogleFonts.poppins(fontWeight: FontWeight.bold)),
+        middle: Text(
+          'Productos',
+          style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
+        ),
         // background is handled by body gradient
       ),
       child: SafeArea(
@@ -69,7 +74,10 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 CupertinoSliverRefreshControl(onRefresh: _refreshProducts),
                 SliverToBoxAdapter(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 12,
+                    ),
                     child: CupertinoSearchTextField(
                       controller: _searchController,
                       onChanged: _filterProducts,
@@ -90,8 +98,13 @@ class _ProductsScreenState extends State<ProductsScreen> {
                             color: CupertinoColors.systemGrey,
                           ),
                           const SizedBox(height: 16),
-                          Text('No se encontraron productos',
-                              style: GoogleFonts.poppins(fontSize: 18, color: CupertinoColors.systemGrey)),
+                          Text(
+                            'No se encontraron productos',
+                            style: GoogleFonts.poppins(
+                              fontSize: 18,
+                              color: CupertinoColors.systemGrey,
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -100,97 +113,137 @@ class _ProductsScreenState extends State<ProductsScreen> {
                   SliverPadding(
                     padding: const EdgeInsets.all(16),
                     sliver: SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                        (context, index) {
-                          final product = filteredProducts[index];
-                          // responsive sizes
-                          final width = MediaQuery.of(context).size.width;
-                          final imageSize = width * 0.18;
+                      delegate: SliverChildBuilderDelegate((context, index) {
+                        final product = filteredProducts[index];
+                        // responsive sizes
+                        final width = MediaQuery.of(context).size.width;
+                        final imageSize = width * 0.18;
 
-                          return GestureDetector(
-                            onTap: () => _showProductDetail(product),
-                            child: Container(
-                              margin: const EdgeInsets.only(bottom: 16),
-                              padding: const EdgeInsets.all(12),
-                              decoration: BoxDecoration(
-                                color: CupertinoColors.systemBackground.resolveFrom(context),
-                                borderRadius: BorderRadius.circular(16),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: CupertinoColors.black.withValues(alpha: 0.05),
-                                    blurRadius: 8,
-                                    offset: const Offset(0, 4),
+                        return GestureDetector(
+                          onTap: () => _showProductDetail(product),
+                          child: Container(
+                            margin: const EdgeInsets.only(bottom: 16),
+                            padding: const EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              color: CupertinoColors.systemBackground
+                                  .resolveFrom(context),
+                              borderRadius: BorderRadius.circular(16),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: CupertinoColors.black.withValues(
+                                    alpha: 0.05,
                                   ),
-                                ],
-                              ),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    width: imageSize,
-                                    height: imageSize,
-                                    decoration: BoxDecoration(
-                                      color: product.color,
-                                      borderRadius: BorderRadius.circular(12),
+                                  blurRadius: 8,
+                                  offset: const Offset(0, 4),
+                                ),
+                              ],
+                            ),
+                            child: Row(
+                              children: [
+                                Container(
+                                  width: imageSize,
+                                  height: imageSize,
+                                  decoration: BoxDecoration(
+                                    color: product.color,
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: Icon(
+                                    product.icon,
+                                    size: imageSize * 0.5,
+                                    color: CupertinoColors.white,
+                                  ),
+                                ),
+                                SizedBox(width: width * 0.04),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        product.name,
+                                        style: GoogleFonts.poppins(
+                                          fontSize: width * 0.04,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      const SizedBox(height: 6),
+                                      Text(
+                                        product.description,
+                                        style: TextStyle(
+                                          fontSize: width * 0.032,
+                                          color: CupertinoColors.systemGrey,
+                                        ),
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      const SizedBox(height: 8),
+                                      Row(
+                                        children: [
+                                          Icon(
+                                            CupertinoIcons.star_fill,
+                                            size: width * 0.032,
+                                            color: CupertinoColors.systemYellow,
+                                          ),
+                                          const SizedBox(width: 6),
+                                          Text(
+                                            '${product.rating}/5.0',
+                                            style: TextStyle(
+                                              fontSize: width * 0.032,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 6),
+                                      Text(
+                                        '\$${product.price.toStringAsFixed(2)}',
+                                        style: GoogleFonts.poppins(
+                                          fontSize: width * 0.045,
+                                          fontWeight: FontWeight.bold,
+                                          color: AppConstants.primaryColor,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  decoration: const BoxDecoration(
+                                    gradient: AppConstants.buttonGradient,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: CupertinoButton(
+                                    padding: const EdgeInsets.all(10),
+                                    child: const Icon(
+                                      CupertinoIcons.plus,
+                                      color: CupertinoColors.white,
                                     ),
-                                    child: Icon(product.icon, size: imageSize * 0.5, color: CupertinoColors.white),
-                                  ),
-                                  SizedBox(width: width * 0.04),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(product.name,
-                                            style: GoogleFonts.poppins(fontSize: width * 0.04, fontWeight: FontWeight.w600),
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis),
-                                        const SizedBox(height: 6),
-                                        Text(product.description,
-                                            style: TextStyle(fontSize: width * 0.032, color: CupertinoColors.systemGrey),
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis),
-                                        const SizedBox(height: 8),
-                                        Row(
-                                          children: [
-                                            Icon(CupertinoIcons.star_fill, size: width * 0.032, color: CupertinoColors.systemYellow),
-                                            const SizedBox(width: 6),
-                                            Text('${product.rating}/5.0', style: TextStyle(fontSize: width * 0.032, fontWeight: FontWeight.bold)),
+                                    onPressed: () {
+                                      cartProvider.addItem(product);
+                                      showCupertinoDialog(
+                                        context: context,
+                                        builder: (ctx) => CupertinoAlertDialog(
+                                          content: Text(
+                                            '${product.name} agregado al carrito',
+                                          ),
+                                          actions: [
+                                            CupertinoDialogAction(
+                                              child: const Text('OK'),
+                                              onPressed: () =>
+                                                  Navigator.pop(ctx),
+                                            ),
                                           ],
                                         ),
-                                        const SizedBox(height: 6),
-                                        Text('\$${product.price.toStringAsFixed(2)}',
-                                            style: GoogleFonts.poppins(fontSize: width * 0.045, fontWeight: FontWeight.bold, color: AppConstants.primaryColor)),
-                                      ],
-                                    ),
+                                      );
+                                    },
                                   ),
-                                  Container(
-                                    decoration: const BoxDecoration(
-                                      gradient: AppConstants.buttonGradient,
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: CupertinoButton(
-                                      padding: const EdgeInsets.all(10),
-                                      child: const Icon(CupertinoIcons.plus, color: CupertinoColors.white),
-                                      onPressed: () {
-                                        cartProvider.addItem(product);
-                                        showCupertinoDialog(
-                                          context: context,
-                                          builder: (ctx) => CupertinoAlertDialog(
-                                            content: Text('${product.name} agregado al carrito'),
-                                            actions: [
-                                              CupertinoDialogAction(child: const Text('OK'), onPressed: () => Navigator.pop(ctx)),
-                                            ],
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
-                          );
-                        },
-                        childCount: filteredProducts.length,
-                      ),
+                          ),
+                        );
+                      }, childCount: filteredProducts.length),
                     ),
                   ),
                 ],
@@ -203,7 +256,10 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 right: 16,
                 bottom: 16,
                 child: CupertinoButton.filled(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 12,
+                  ),
                   borderRadius: BorderRadius.circular(30),
                   child: Row(
                     children: [
@@ -264,7 +320,11 @@ class _ProductsScreenState extends State<ProductsScreen> {
                   SizedBox(height: size.height * 0.01),
                   Row(
                     children: [
-                      Icon(CupertinoIcons.star_fill, color: CupertinoColors.systemYellow, size: size.width * 0.05),
+                      Icon(
+                        CupertinoIcons.star_fill,
+                        color: CupertinoColors.systemYellow,
+                        size: size.width * 0.05,
+                      ),
                       const SizedBox(width: 8),
                       Text(
                         '${product.rating}/5.0',
@@ -275,7 +335,10 @@ class _ProductsScreenState extends State<ProductsScreen> {
                       ),
                       const SizedBox(width: 16),
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: size.width * 0.03, vertical: 4),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: size.width * 0.03,
+                          vertical: 4,
+                        ),
                         decoration: BoxDecoration(
                           color: product.color.withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(12),
@@ -312,14 +375,22 @@ class _ProductsScreenState extends State<ProductsScreen> {
                     width: double.infinity,
                     child: CupertinoButton.filled(
                       onPressed: () {
-                        Provider.of<CartProvider>(context, listen: false).addItem(product);
+                        Provider.of<CartProvider>(
+                          context,
+                          listen: false,
+                        ).addItem(product);
                         Navigator.pop(context);
                         showCupertinoDialog(
                           context: context,
                           builder: (ctx) => CupertinoAlertDialog(
-                            content: Text('${product.name} agregado al carrito'),
+                            content: Text(
+                              '${product.name} agregado al carrito',
+                            ),
                             actions: [
-                              CupertinoDialogAction(child: const Text('OK'), onPressed: () => Navigator.pop(ctx)),
+                              CupertinoDialogAction(
+                                child: const Text('OK'),
+                                onPressed: () => Navigator.pop(ctx),
+                              ),
                             ],
                           ),
                         );
@@ -390,15 +461,27 @@ class _ProductsScreenState extends State<ProductsScreen> {
                               color: product.color,
                               borderRadius: BorderRadius.circular(8),
                             ),
-                            child: Icon(product.icon, color: CupertinoColors.white, size: imgSize * 0.5),
+                            child: Icon(
+                              product.icon,
+                              color: CupertinoColors.white,
+                              size: imgSize * 0.5,
+                            ),
                           ),
                           const SizedBox(width: 12),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(product.name, style: TextStyle(fontWeight: FontWeight.bold)),
-                                Text('\$${product.price.toStringAsFixed(2)}', style: TextStyle(color: CupertinoColors.systemGrey)),
+                                Text(
+                                  product.name,
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  '\$${product.price.toStringAsFixed(2)}',
+                                  style: TextStyle(
+                                    color: CupertinoColors.systemGrey,
+                                  ),
+                                ),
                               ],
                             ),
                           ),
@@ -471,9 +554,14 @@ class _ProductsScreenState extends State<ProductsScreen> {
                           showCupertinoDialog(
                             context: context,
                             builder: (ctx) => CupertinoAlertDialog(
-                              content: const Text('Funcionalidad de pago en desarrollo'),
+                              content: const Text(
+                                'Funcionalidad de pago en desarrollo',
+                              ),
                               actions: [
-                                CupertinoDialogAction(child: const Text('OK'), onPressed: () => Navigator.pop(ctx)),
+                                CupertinoDialogAction(
+                                  child: const Text('OK'),
+                                  onPressed: () => Navigator.pop(ctx),
+                                ),
                               ],
                             ),
                           );
