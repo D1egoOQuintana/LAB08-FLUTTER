@@ -1,50 +1,55 @@
-# 🛍️ Sistema de Comercio Electrónico - Flutter
+# 🛍️ Sistema de Comercio Electrónico - Flutter (iOS Style)
 
 ## 📱 Descripción
-Aplicación completa de comercio electrónico desarrollada en Flutter con autenticación, gestión de carrito, y configuración de usuario. Incluye 4 pantallas principales con navegación fluida y persistencia de datos.
+Aplicación completa de comercio electrónico desarrollada en **Flutter** con **diseño iOS nativo** usando widgets Cupertino. Incluye autenticación, gestión de carrito, y configuración de usuario. **100% responsiva** con tamaños adaptables a cualquier dispositivo iOS.
 
 ## ✨ Características Principales
 
-### 🔐 Pantalla de Login
-- Diseño moderno con gradiente azul a morado
-- Validación de formularios en tiempo real
-- Sistema de "Recordar sesión" con SharedPreferences
-- Animaciones de entrada (fade in)
-- Toggle para mostrar/ocultar contraseña
+### 🎨 Diseño iOS Nativo
+- **100% Cupertino Widgets**: CupertinoApp, CupertinoPageScaffold, CupertinoNavigationBar
+- **Diseño Responsivo Total**: Todos los tamaños calculados con MediaQuery (sin píxeles fijos)
+- **Navegación iOS**: CupertinoPageRoute con transiciones nativas
+- **Componentes iOS**: CupertinoButton, CupertinoTextField, CupertinoAlertDialog, CupertinoActivityIndicator
+- **Tipografía**: Google Fonts (Poppins) integrada con CupertinoThemeData
+
+### 🔐 Pantalla de Login (iOS Style)
+- Diseño con gradiente azul a morado (fondo personalizado)
+- **CupertinoTextField** con validación en tiempo real
+- **CupertinoSwitch** para "Recordar sesión" con SharedPreferences
+- Animaciones de entrada (FadeTransition)
+- Toggle iOS para mostrar/ocultar contraseña
+- **Tamaños responsivos**: Logo, textos y botones se adaptan al tamaño de pantalla
 - Credenciales de prueba:
   - **Email:** usuario@tienda.com
   - **Password:** 123456
 
-### 🏠 Menú Principal (Home)
-- AppBar con gradiente personalizado
+### 🏠 Menú Principal (iOS Style)
+- **CupertinoNavigationBar** con título personalizado
 - Avatar del usuario con inicial
-- Badge de notificaciones (3 notificaciones)
-- Drawer lateral con:
-  - Header personalizado con avatar y email
-  - Navegación a perfil y configuración
-  - Opción de cerrar sesión con confirmación
-- GridView de 4 categorías:
+- Badge de notificaciones con **CupertinoAlertDialog**
+- **GridView responsivo** de 4 categorías con cards adaptables:
   - Electrónica
   - Ropa
   - Hogar
   - Deportes
-- FloatingActionButton para ver carrito (muestra cantidad de items)
+- Botón flotante iOS (**CupertinoButton.filled**) para ver carrito
+- Navegación con **CupertinoPageRoute** y transiciones nativas
 
-### 📦 Lista de Productos
-- ListView de 8 productos de ejemplo
-- Búsqueda funcional por nombre
-- Pull-to-refresh para actualizar productos
+### 📦 Lista de Productos (iOS Style)
+- **CustomScrollView** con **CupertinoSliverRefreshControl** (pull-to-refresh iOS)
+- **CupertinoSearchTextField** funcional para búsqueda
+- Lista de 8 productos con **diseño totalmente responsivo**:
+  - Tamaños de imagen, texto y botones calculados dinámicamente
+  - Cards con sombras suaves estilo iOS
 - Cada producto muestra:
-  - Imagen con color distintivo
-  - Nombre y descripción
+  - Imagen con color distintivo (tamaño adaptable)
+  - Nombre y descripción (texto responsivo)
   - Precio formateado
-  - Rating con estrellas (4.5/5.0)
-  - Botón para agregar al carrito
-- Bottom sheet detallado al tocar un producto
-- Bottom sheet del carrito con funcionalidad completa:
-  - Ver todos los productos
-  - Aumentar/disminuir cantidad
-  - Total calculado automáticamente
+  - Rating con **CupertinoIcons.star_fill**
+  - **CupertinoButton** circular para agregar al carrito
+- **CupertinoAlertDialog** al agregar productos
+- **showCupertinoModalPopup** para detalles del producto
+- Botón de carrito flotante con **CupertinoButton.filled**
 
 ### 👤 Perfil y Configuración (2 Tabs)
 
@@ -77,11 +82,12 @@ Aplicación completa de comercio electrónico desarrollada en Flutter con autent
 
 ## 🛠️ Tecnologías Utilizadas
 
-- **Flutter:** Framework principal
-- **Provider:** Manejo de estado global
-- **SharedPreferences:** Persistencia de sesión y configuraciones
-- **Google Fonts:** Tipografía Poppins
-- **Material 3:** Sistema de diseño
+- **Flutter**: Framework principal con **Cupertino Widgets**
+- **Provider**: Manejo de estado global (compatible con Cupertino)
+- **SharedPreferences**: Persistencia de sesión y configuraciones
+- **Google Fonts**: Tipografía Poppins integrada con CupertinoThemeData
+- **Cupertino Icons**: Iconografía nativa de iOS
+- **Diseño 100% Responsivo**: MediaQuery para tamaños adaptativos
 
 ## 📁 Estructura del Proyecto
 
@@ -111,7 +117,7 @@ lib/
 1. **Clonar el repositorio:**
    ```bash
    git clone <url-del-repo>
-   cd lab08_quintana
+   cd LAB08-FLUTTER
    ```
 
 2. **Instalar dependencias:**
@@ -119,9 +125,14 @@ lib/
    flutter pub get
    ```
 
-3. **Ejecutar la aplicación:**
+3. **Ejecutar la aplicación (recomendado: simulador iOS):**
    ```bash
    flutter run
+   ```
+
+4. **Verificar código:**
+   ```bash
+   flutter analyze
    ```
 
 ## 📦 Dependencias
@@ -130,9 +141,10 @@ lib/
 dependencies:
   flutter:
     sdk: flutter
-  provider: ^6.1.2
-  shared_preferences: ^2.3.3
-  google_fonts: ^6.2.1
+  cupertino_icons: ^1.0.8      # Iconos iOS nativos
+  provider: ^6.1.2              # Estado global
+  shared_preferences: ^2.3.3    # Persistencia local
+  google_fonts: ^6.2.1          # Tipografía Poppins
 ```
 
 ## 🎨 Paleta de Colores
@@ -161,27 +173,50 @@ Profile Screen
 
 ## ✅ Funcionalidades Implementadas
 
+- [x] **Diseño iOS nativo** con Cupertino widgets (CupertinoApp, CupertinoPageScaffold)
+- [x] **100% Responsivo** - tamaños adaptables con MediaQuery (sin píxeles fijos)
 - [x] Autenticación con credenciales hardcodeadas
 - [x] Persistencia de sesión con SharedPreferences
 - [x] Auto-login al reabrir la app
-- [x] Gestión de carrito de compras
-- [x] Modo oscuro funcional
-- [x] Búsqueda de productos
-- [x] Pull-to-refresh
+- [x] Gestión de carrito de compras (Provider)
+- [x] Modo oscuro funcional (CupertinoThemeData con Brightness)
+- [x] Búsqueda de productos (**CupertinoSearchTextField**)
+- [x] Pull-to-refresh iOS (**CupertinoSliverRefreshControl**)
 - [x] Validaciones de formularios
-- [x] Animaciones y transiciones
-- [x] Bottom sheets y dialogs
-- [x] Drawer navegacional
-- [x] Diseño responsive
-- [x] Material 3 design
+- [x] Animaciones y transiciones iOS (**CupertinoPageRoute**)
+- [x] **CupertinoAlertDialog** y **showCupertinoModalPopup**
+- [x] Navegación con **CupertinoNavigationBar**
+- [x] **CupertinoButton**, **CupertinoTextField**, **CupertinoSwitch**
+- [x] Iconos nativos iOS (**CupertinoIcons**)
 
 ## 📝 Notas Adicionales
 
-- La aplicación está completamente funcional excepto por el proceso de pago (muestra mensaje de "en desarrollo")
+- La aplicación está diseñada **100% para iOS** con widgets Cupertino
+- **Totalmente responsiva**: todos los tamaños (texto, íconos, cards) se calculan con MediaQuery
+- Sin tamaños fijos en píxeles - se adapta a cualquier iPhone/iPad
 - Los datos de productos son hardcodeados pero pueden conectarse fácilmente a una API
 - Todas las configuraciones se persisten localmente
 - El tema oscuro afecta toda la aplicación en tiempo real
-- Las validaciones son completas y muestran mensajes en español
+- Las validaciones muestran mensajes en español
+- **4 pantallas migradas a Cupertino**: main.dart (splash), login_screen, products_screen, menu_screen
+- profile_screen mantiene diseño Material (omitido según instrucciones)
+
+## 🎯 Migración Cupertino Completada
+
+### Widgets Material → Cupertino:
+- ✅ `MaterialApp` → `CupertinoApp`
+- ✅ `Scaffold` → `CupertinoPageScaffold`
+- ✅ `AppBar` → `CupertinoNavigationBar`
+- ✅ `TextField` → `CupertinoTextField`
+- ✅ `ElevatedButton` → `CupertinoButton` / `CupertinoButton.filled`
+- ✅ `FloatingActionButton` → `CupertinoButton.filled` (positioned)
+- ✅ `CircularProgressIndicator` → `CupertinoActivityIndicator`
+- ✅ `AlertDialog` → `CupertinoAlertDialog`
+- ✅ `showModalBottomSheet` → `showCupertinoModalPopup`
+- ✅ `RefreshIndicator` → `CupertinoSliverRefreshControl`
+- ✅ `Checkbox` → `CupertinoSwitch`
+- ✅ `SnackBar` → `CupertinoAlertDialog`
+- ✅ `Icons.*` → `CupertinoIcons.*`
 
 
 

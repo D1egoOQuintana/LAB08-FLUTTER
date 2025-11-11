@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'providers/auth_provider.dart';
@@ -26,26 +26,17 @@ class MyApp extends StatelessWidget {
       ],
       child: Consumer<ThemeProvider>(
         builder: (context, themeProvider, _) {
-          return MaterialApp(
+          // Use CupertinoApp to provide iOS look-and-feel.
+          return CupertinoApp(
             title: 'Mi Tienda',
             debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-              useMaterial3: true,
-              colorScheme: ColorScheme.fromSeed(
-                seedColor: AppConstants.primaryColor,
-                brightness: Brightness.light,
+            theme: CupertinoThemeData(
+              brightness: themeProvider.isDarkMode ? Brightness.dark : Brightness.light,
+              primaryColor: AppConstants.primaryColor,
+              textTheme: CupertinoTextThemeData(
+                textStyle: GoogleFonts.poppins(),
               ),
-              textTheme: GoogleFonts.poppinsTextTheme(),
             ),
-            darkTheme: ThemeData(
-              useMaterial3: true,
-              colorScheme: ColorScheme.fromSeed(
-                seedColor: AppConstants.primaryColor,
-                brightness: Brightness.dark,
-              ),
-              textTheme: GoogleFonts.poppinsTextTheme(ThemeData.dark().textTheme),
-            ),
-            themeMode: themeProvider.themeMode,
             home: const SplashScreen(),
           );
         },
@@ -82,9 +73,9 @@ class _SplashScreenState extends State<SplashScreen> {
     await Future.delayed(const Duration(seconds: 2));
     
     if (mounted) {
-      // Navegar según el estado de autenticación
+      // Navegar según el estado de autenticación usando CupertinoPageRoute
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
+        CupertinoPageRoute(
           builder: (context) => authProvider.isAuthenticated
               ? const MenuScreen()
               : const LoginScreen(),
@@ -95,8 +86,13 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
+    // Make layout responsive using MediaQuery
+    final size = MediaQuery.of(context).size;
+    final logoSize = (size.width < size.height ? size.width : size.height) * 0.22;
+
+    return CupertinoPageScaffold(
+      // Use a Container as background to keep the gradient
+      child: Container(
         width: double.infinity,
         height: double.infinity,
         decoration: const BoxDecoration(
@@ -106,38 +102,36 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              width: 120,
-              height: 120,
+              width: logoSize,
+              height: logoSize,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: CupertinoColors.white,
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.2),
+                    color: CupertinoColors.black.withValues(alpha: 0.2),
                     blurRadius: 20,
                     offset: const Offset(0, 10),
                   ),
                 ],
               ),
-              child: const Icon(
-                Icons.shopping_bag,
-                size: 60,
+              child: Icon(
+                CupertinoIcons.bag,
+                size: logoSize * 0.5,
                 color: AppConstants.primaryColor,
               ),
             ),
-            const SizedBox(height: 32),
+            SizedBox(height: size.height * 0.04),
             Text(
               'Mi Tienda',
               style: GoogleFonts.poppins(
-                fontSize: 36,
+                fontSize: size.width * 0.08,
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
+                color: CupertinoColors.white,
               ),
             ),
-            const SizedBox(height: 48),
-            const CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-            ),
+            SizedBox(height: size.height * 0.06),
+            const CupertinoActivityIndicator(),
           ],
         ),
       ),

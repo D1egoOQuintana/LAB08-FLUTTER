@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -102,8 +103,9 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
     final authProvider = Provider.of<AuthProvider>(context);
     final size = MediaQuery.of(context).size;
 
-    return Scaffold(
-      body: Container(
+    return CupertinoPageScaffold(
+      backgroundColor: Colors.transparent,
+      child: Container(
         width: double.infinity,
         height: double.infinity,
         decoration: const BoxDecoration(
@@ -113,70 +115,70 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
           child: FadeTransition(
             opacity: _fadeAnimation,
             child: SingleChildScrollView(
-              padding: const EdgeInsets.all(24.0),
+              padding: EdgeInsets.all(size.width * 0.06),
               child: Form(
                 key: _formKey,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SizedBox(height: size.height * 0.08),
-                    
+                    SizedBox(height: size.height * 0.06),
+
                     // Logo
                     Container(
-                      width: 120,
-                      height: 120,
+                      width: size.width * 0.28,
+                      height: size.width * 0.28,
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: CupertinoColors.white,
                         shape: BoxShape.circle,
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.2),
+                            color: CupertinoColors.black.withValues(alpha: 0.2),
                             blurRadius: 20,
                             offset: const Offset(0, 10),
                           ),
                         ],
                       ),
-                      child: const Icon(
-                        Icons.shopping_bag,
-                        size: 60,
+                      child: Icon(
+                        CupertinoIcons.bag,
+                        size: size.width * 0.12,
                         color: AppConstants.primaryColor,
                       ),
                     ),
-                    
-                    const SizedBox(height: 32),
-                    
+
+                    SizedBox(height: size.height * 0.03),
+
                     // Título
                     Text(
                       'Bienvenido',
                       style: GoogleFonts.poppins(
-                        fontSize: 36,
+                        fontSize: size.width * 0.09,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: CupertinoColors.white,
                       ),
                     ),
-                    
-                    const SizedBox(height: 8),
-                    
+
+                    SizedBox(height: size.height * 0.01),
+
                     // Subtítulo
                     Text(
                       'Inicia sesión para continuar',
                       style: GoogleFonts.poppins(
-                        fontSize: 16,
-                        color: Colors.white.withOpacity(0.9),
+                        fontSize: size.width * 0.036,
+                        color: CupertinoColors.white.withValues(alpha: 0.9),
                       ),
                     ),
-                    
-                    const SizedBox(height: 48),
-                    
+
+                    SizedBox(height: size.height * 0.04),
+
                     // Card del formulario
                     Container(
-                      padding: const EdgeInsets.all(24),
+                      padding: EdgeInsets.all(size.width * 0.06),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: CupertinoColors.white,
                         borderRadius: BorderRadius.circular(20),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
+                            color: CupertinoColors.black.withValues(alpha: 0.1),
                             blurRadius: 20,
                             offset: const Offset(0, 10),
                           ),
@@ -185,189 +187,86 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                       child: Column(
                         children: [
                           // Email TextField
-                          TextFormField(
+                          CupertinoTextField(
                             controller: _emailController,
                             keyboardType: TextInputType.emailAddress,
-                            decoration: InputDecoration(
-                              labelText: 'Email',
-                              hintText: 'correo@ejemplo.com',
-                              prefixIcon: const Icon(Icons.email_outlined),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: BorderSide(color: Colors.grey.shade300),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: const BorderSide(color: AppConstants.primaryColor, width: 2),
-                              ),
+                            placeholder: 'correo@ejemplo.com',
+                            prefix: Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: Icon(CupertinoIcons.mail, color: CupertinoColors.systemGrey),
                             ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Por favor ingresa tu email';
-                              }
-                              if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
-                                return 'Ingresa un email válido';
-                              }
-                              return null;
-                            },
                           ),
-                          
-                          const SizedBox(height: 20),
-                          
+
+                          SizedBox(height: size.height * 0.02),
+
                           // Password TextField
-                          TextFormField(
+                          CupertinoTextField(
                             controller: _passwordController,
                             obscureText: _obscurePassword,
-                            decoration: InputDecoration(
-                              labelText: 'Contraseña',
-                              hintText: '••••••••',
-                              prefixIcon: const Icon(Icons.lock_outline),
-                              suffixIcon: IconButton(
-                                icon: Icon(
-                                  _obscurePassword ? Icons.visibility_off : Icons.visibility,
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    _obscurePassword = !_obscurePassword;
-                                  });
-                                },
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: BorderSide(color: Colors.grey.shade300),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: const BorderSide(color: AppConstants.primaryColor, width: 2),
-                              ),
+                            placeholder: 'Contraseña',
+                            suffix: CupertinoButton(
+                              padding: EdgeInsets.zero,
+                              child: Icon(_obscurePassword ? CupertinoIcons.eye_slash : CupertinoIcons.eye),
+                              onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
                             ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Por favor ingresa tu contraseña';
-                              }
-                              if (value.length < 6) {
-                                return 'La contraseña debe tener al menos 6 caracteres';
-                              }
-                              return null;
-                            },
                           ),
-                          
-                          const SizedBox(height: 12),
-                          
+
+                          SizedBox(height: size.height * 0.015),
+
                           // Recordar sesión
                           Row(
                             children: [
-                              Checkbox(
+                              CupertinoSwitch(
                                 value: _rememberMe,
-                                onChanged: (value) {
-                                  setState(() {
-                                    _rememberMe = value ?? false;
-                                  });
-                                },
-                                activeColor: AppConstants.primaryColor,
+                                onChanged: (v) => setState(() => _rememberMe = v),
                               ),
+                              const SizedBox(width: 8),
                               const Text('Recordar sesión'),
                             ],
                           ),
-                          
-                          const SizedBox(height: 24),
-                          
+
+                          SizedBox(height: size.height * 0.03),
+
                           // Botón de login
                           SizedBox(
                             width: double.infinity,
-                            height: 56,
+                            height: size.height * 0.07,
                             child: authProvider.isLoading
-                                ? const Center(
-                                    child: CircularProgressIndicator(
-                                      color: AppConstants.primaryColor,
-                                    ),
-                                  )
-                                : ElevatedButton(
+                                ? const Center(child: CupertinoActivityIndicator())
+                                : CupertinoButton.filled(
                                     onPressed: _handleLogin,
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.transparent,
-                                      shadowColor: Colors.transparent,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      padding: EdgeInsets.zero,
-                                    ),
-                                    child: Ink(
-                                      decoration: BoxDecoration(
-                                        gradient: AppConstants.buttonGradient,
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      child: Container(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          'INICIAR SESIÓN',
-                                          style: GoogleFonts.poppins(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
+                                    borderRadius: BorderRadius.circular(12),
+                                    child: Text('INICIAR SESIÓN', style: GoogleFonts.poppins(fontWeight: FontWeight.bold)),
                                   ),
                           ),
-                          
-                          const SizedBox(height: 16),
-                          
+
+                          SizedBox(height: size.height * 0.02),
+
                           // Olvidaste tu contraseña
-                          TextButton(
+                          CupertinoButton(
                             onPressed: _showForgotPasswordDialog,
-                            child: Text(
-                              '¿Olvidaste tu contraseña?',
-                              style: GoogleFonts.poppins(
-                                color: AppConstants.primaryColor,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
+                            padding: EdgeInsets.zero,
+                            child: Text('¿Olvidaste tu contraseña?', style: GoogleFonts.poppins(color: AppConstants.primaryColor)),
                           ),
                         ],
                       ),
                     ),
-                    
-                    const SizedBox(height: 24),
-                    
+
+                    SizedBox(height: size.height * 0.03),
+
                     // Credenciales de prueba
                     Container(
-                      padding: const EdgeInsets.all(16),
+                      padding: EdgeInsets.all(size.width * 0.04),
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.2),
+                        color: CupertinoColors.white.withValues(alpha: 0.2),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Column(
                         children: [
-                          Text(
-                            'Credenciales de prueba:',
-                            style: GoogleFonts.poppins(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            'Email: usuario@tienda.com',
-                            style: GoogleFonts.poppins(
-                              color: Colors.white,
-                              fontSize: 12,
-                            ),
-                          ),
-                          Text(
-                            'Password: 123456',
-                            style: GoogleFonts.poppins(
-                              color: Colors.white,
-                              fontSize: 12,
-                            ),
-                          ),
+                          Text('Credenciales de prueba:', style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.bold)),
+                          SizedBox(height: size.height * 0.01),
+                          Text('Email: usuario@tienda.com', style: GoogleFonts.poppins(color: Colors.white, fontSize: size.width * 0.03)),
+                          Text('Password: 123456', style: GoogleFonts.poppins(color: Colors.white, fontSize: size.width * 0.03)),
                         ],
                       ),
                     ),
